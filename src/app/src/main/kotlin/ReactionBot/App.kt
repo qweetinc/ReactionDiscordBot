@@ -16,6 +16,10 @@ class BotClient : ListenerAdapter(){
     lateinit var jda: JDA
 
     val commentOfMention = listOf("早よ来い", "ゲームするぞボケ", "Valorantしよ")
+    val commentOfWoman = listOf("女！女！！女！！！", "女！酒！金！", "おんなぁ", "女と電話するな")
+    val commentOfYoutube = listOf("このクリップはすごい", "いやぁさすがだなあ", "えぇぇ", "これはmasan並み")
+
+    val bfRegex = Regex("""(BF|bf|おばっち|オーバーウォッチ|overwatch|OW|ow)""")
 
     fun main(token: String) { //トークンを使ってBotを起動する部分
         jda = JDABuilder.createLight(token,
@@ -31,16 +35,31 @@ class BotClient : ListenerAdapter(){
     override fun onGuildMessageReceived(event : GuildMessageReceivedEvent) {
         val message = event.message;
 
-        //Botがメッセージを受信したときの処理
-        if(message.contentDisplay == "/neko"){//メッセージ内容を確認
-            event.channel.sendMessageFormat("にゃーん").queue() //メッセージ送信
+        // メンションのみのメッセージがあった時の処理
+        if(message.contentDisplay.startsWith("@") && !message.contentDisplay.contains(" ")){
+            randomSendMessage(event, commentOfMention)
         }
 
-        // メンションのみのメッセージがあった時の処理
-        if(message.contentDisplay.startsWith("@")){
-            val sendMessage = commentOfMention.get(Random.nextInt(commentOfMention.size))
+        // BFやオーバーウォッチを示唆するメッセージがあった時の処理
+        if(bfRegex.containsMatchIn(message.contentDisplay)){
+            val sendMessage = "BFやオーバーウォッチはゲームではないですよ"
             event.channel.sendMessageFormat(sendMessage).queue()
         }
+
+        // 女を含むテキストがあった時の処理
+        if(message.contentDisplay.contains("女")){
+            randomSendMessage(event, commentOfWoman)
+        }
+
+        // youtubeのリンクがあった時の処理
+        if(message.contentDisplay.contains("www.youtube.com")){
+            randomSendMessage(event, commentOfYoutube)
+        }
+    }
+
+    private fun randomSendMessage(event: GuildMessageReceivedEvent, list: List<String>) {
+        val sendMessage = list.get(Random.nextInt(list.size))
+        event.channel.sendMessageFormat(sendMessage).queue()
     }
 }
 
