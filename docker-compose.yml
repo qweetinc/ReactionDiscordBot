@@ -1,0 +1,10 @@
+version: "2"
+services:
+  base:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/root/src
+    env_file:
+      - .env
