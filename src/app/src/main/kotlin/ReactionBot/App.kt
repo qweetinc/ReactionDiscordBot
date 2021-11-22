@@ -18,6 +18,7 @@ class BotClient : ListenerAdapter(){
     val commentOfMention = listOf("早よ来い", "ゲームするぞボケ", "Valorantしよ")
     val commentOfWoman = listOf("女！女！！女！！！", "女！酒！金！", "おんなぁ", "女と電話するな")
     val commentOfYoutube = listOf("このクリップはすごい", "いやぁさすがだなあ", "えぇぇ", "これはmasan並み")
+    val commentOfBF = listOf("BFやオーバーウォッチはゲームではないですよ", "valorantやりませんか？", "神ゲーｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!")
 
     val bfRegex = Regex("""(BF|bf|おばっち|オーバーウォッチ|overwatch|OW|ow)""")
 
@@ -44,8 +45,7 @@ class BotClient : ListenerAdapter(){
 
         // BFやオーバーウォッチを示唆するメッセージがあった時の処理
         if(bfRegex.containsMatchIn(message.contentDisplay)){
-            val sendMessage = "BFやオーバーウォッチはゲームではないですよ"
-            event.channel.sendMessageFormat(sendMessage).queue()
+            randomSendMessage(event, commentOfBF)
         }
 
         // 女を含むテキストがあった時の処理
