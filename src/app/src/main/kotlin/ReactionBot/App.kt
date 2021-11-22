@@ -35,6 +35,8 @@ class BotClient : ListenerAdapter(){
     override fun onGuildMessageReceived(event : GuildMessageReceivedEvent) {
         val message = event.message;
 
+        if(event.author.isBot) return //Bot自身のメッセージは無視する
+
         // メンションのみのメッセージがあった時の処理
         if(message.contentDisplay.startsWith("@") && !message.contentDisplay.contains(" ")){
             randomSendMessage(event, commentOfMention)
