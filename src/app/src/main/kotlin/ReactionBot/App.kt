@@ -19,8 +19,11 @@ class BotClient : ListenerAdapter(){
     val commentOfWoman = listOf("女！女！！女！！！", "女！酒！金！", "おんなぁ", "女と電話するな")
     val commentOfYoutube = listOf("このクリップはすごい", "いやぁさすがだなあ", "えぇぇ", "これはmasan並み")
     val commentOfBF = listOf("BFやオーバーウォッチはゲームではないですよ", "valorantやりませんか？", "神ゲーｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!")
+    val commentOfUnrated = listOf("コンペから逃げるな")
+    val commentOfSubAccount = listOf("本アカから逃げるな")
 
     val bfRegex = Regex("""(BF|bf|おばっち|オーバーウォッチ|overwatch|OW|ow)""")
+    val subAccountRegex = Regex("""(サブ垢|サブアカ)""")
 
     fun main(token: String) { //トークンを使ってBotを起動する部分
         jda = JDABuilder.createLight(token,
@@ -56,6 +59,16 @@ class BotClient : ListenerAdapter(){
         // youtubeのリンクがあった時の処理
         if(message.contentDisplay.contains("www.youtube.com")){
             randomSendMessage(event, commentOfYoutube)
+        }
+
+        // アンレートを示唆するメッセージがあった時の処理
+        if(message.contentDisplay.contains("アンレ") || message.contentDisplay.contains("あんれ")){
+            randomSendMessage(event, commentOfUnrated)
+        }
+
+        // サブアカウントを示唆するメッセージがあった時の処理
+        if(subAccountRegex.containsMatchIn(message.contentDisplay)){
+            randomSendMessage(event, commentOfSubAccount)
         }
     }
 
