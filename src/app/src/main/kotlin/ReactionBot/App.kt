@@ -21,9 +21,11 @@ class BotClient : ListenerAdapter(){
     val commentOfBF = listOf("BFやオーバーウォッチはゲームではないですよ", "valorantやりませんか？", "神ゲーｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!")
     val commentOfUnrated = listOf("コンペから逃げるな")
     val commentOfSubAccount = listOf("本アカから逃げるな")
+    val commentOfValorant = listOf("スパイクラッシュはクソ", "rion", "それはもうLazやん")
 
     val bfRegex = Regex("""(BF|bf|おばっち|オーバーウォッチ|overwatch|OW|ow)""")
     val subAccountRegex = Regex("""(サブ垢|サブアカ)""")
+    val valorantRegex = Regex("""(Valorant|valorant|valo|ヴァロ|バロ)""")
 
     fun main(token: String) { //トークンを使ってBotを起動する部分
         jda = JDABuilder.createLight(token,
@@ -40,6 +42,12 @@ class BotClient : ListenerAdapter(){
         val message = event.message;
 
         if(event.author.isBot) return //Bot自身のメッセージは無視する
+
+        // ダイス機能追加
+        if(message.contentDisplay.startWith("""\dice""")) {
+            val dice = Random.nextInt(1, 101)
+            message.channel.sendMessage("${dice}").queue()
+        }
 
         // メンションのみのメッセージがあった時の処理
         if(message.contentDisplay.startsWith("@") && !message.contentDisplay.contains(" ")){
@@ -69,6 +77,11 @@ class BotClient : ListenerAdapter(){
         // サブアカウントを示唆するメッセージがあった時の処理
         if(subAccountRegex.containsMatchIn(message.contentDisplay)){
             randomSendMessage(event, commentOfSubAccount)
+        }
+
+        // Valorantを示唆するメッセージがあった時の処理
+        if(valorantRegex.containsMatchIn(message.contentDisplay)){
+            randomSendMessage(event, commentOfValorant)
         }
     }
 
