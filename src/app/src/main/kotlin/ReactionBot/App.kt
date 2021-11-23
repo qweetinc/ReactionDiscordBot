@@ -44,7 +44,7 @@ class BotClient : ListenerAdapter(){
         if(event.author.isBot) return //Bot自身のメッセージは無視する
 
         // ダイス機能追加
-        if(message.contentDisplay.startWith("""\dice""")) {
+        if(message.contentDisplay.startWith("/dice")) {
             val dice = Random.nextInt(1, 101)
             message.channel.sendMessage("${dice}").queue()
         }
