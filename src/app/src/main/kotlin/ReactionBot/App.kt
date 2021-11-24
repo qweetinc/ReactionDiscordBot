@@ -20,7 +20,7 @@ class BotClient : ListenerAdapter(){
     val commentOfYoutube = listOf("このクリップはすごい", "いやぁさすがだなあ", "えぇぇ", "これはmasan並み")
     val commentOfBF = listOf("BFやオーバーウォッチはゲームではないですよ", "valorantやりませんか？", "神ゲーｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!")
     val commentOfUnrated = listOf("コンペから逃げるな")
-    val commentOfSubAccount = listOf("本アカから逃げるな")
+    val commentOfSubAccount = listOf("本アカから逃げるな", "スマーフは規約違反ですよ")
     val commentOfValorant = listOf("スパイクラッシュはクソ", "rion", "それはもうLazやん")
 
     val bfRegex = Regex("""(BF|bf|おばっち|オーバーウォッチ|overwatch|OW|ow)""")
@@ -35,7 +35,7 @@ class BotClient : ListenerAdapter(){
     }
 
     override fun onReady(event: ReadyEvent) { //Botがログインしたときの処理
-        println("Logged in")
+        println("[ReactionDiscordBot] Logged in")
     }
 
     override fun onGuildMessageReceived(event : GuildMessageReceivedEvent) {
