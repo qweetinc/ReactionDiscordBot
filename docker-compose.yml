@@ -6,6 +6,11 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./src:/root/src
-      - /root/.gradle
+      - gradle-cache:/root/.gradle:cached
     env_file:
       - .env
+
+volumes:
+  gradle-cache:
+    driver: local
+
