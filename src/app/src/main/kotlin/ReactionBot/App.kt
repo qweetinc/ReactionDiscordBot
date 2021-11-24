@@ -35,7 +35,7 @@ class BotClient : ListenerAdapter(){
     }
 
     override fun onReady(event: ReadyEvent) { //Botがログインしたときの処理
-        println("起動しました")
+        println("Logged in")
     }
 
     override fun onGuildMessageReceived(event : GuildMessageReceivedEvent) {
