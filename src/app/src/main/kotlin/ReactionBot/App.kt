@@ -19,7 +19,7 @@ class BotClient : ListenerAdapter(){
     val commentOfWoman = listOf("女！女！！女！！！", "女！酒！金！", "おんなぁ", "女と電話するな")
     val commentOfYoutube = listOf("このクリップはすごい", "いやぁさすがだなあ", "えぇぇ", "これはmasan並み")
     val commentOfBF = listOf("BFやオーバーウォッチはゲームではないですよ", "valorantやりませんか？", "神ゲーｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!")
-    val commentOfUnrated = listOf("コンペから逃げるな")
+    val commentOfUnrated = listOf("コンペから逃げるなxxx")
     val commentOfSubAccount = listOf("本アカから逃げるな", "スマーフは規約違反ですよ")
     val commentOfValorant = listOf("スパイクラッシュはクソ", "rion", "それはもうLazやん")
 
