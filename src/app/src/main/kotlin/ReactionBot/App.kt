@@ -22,6 +22,7 @@ class BotClient : ListenerAdapter(){
     val commentOfUnrated = listOf("コンペから逃げるな")
     val commentOfSubAccount = listOf("本アカから逃げるな", "スマーフは規約違反ですよ")
     val commentOfValorant = listOf("スパイクラッシュはクソ", "それはもうLazやん")
+    val commentOfMeal = listOf("三度の飯よりValorant")
 
     val bfRegex = Regex("""(BF|bf|おばっち|オーバーウォッチ|overwatch|OW|ow)""")
     val subAccountRegex = Regex("""(サブ垢|サブアカ)""")
@@ -84,6 +85,12 @@ class BotClient : ListenerAdapter(){
         if(valorantRegex.containsMatchIn(message.contentDisplay)){
             randomSendMessage(event, commentOfValorant)
         }
+
+        // 飯を示唆するメッセージがあったときの処理
+        if(message.contentDisplay.contains("飯")){
+            randomSendMessage(event, commentOfMeal)
+        }
+        
     }
 
     private fun randomSendMessage(event: GuildMessageReceivedEvent, list: List<String>) {
