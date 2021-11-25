@@ -21,7 +21,7 @@ class BotClient : ListenerAdapter(){
     val commentOfBF = listOf("BFやオーバーウォッチはゲームではないですよ", "valorantやりませんか？", "神ゲーｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!")
     val commentOfUnrated = listOf("コンペから逃げるな")
     val commentOfSubAccount = listOf("本アカから逃げるな")
-    val commentOfValorant = listOf("スパイクラッシュはクソ", "rion", "それはもうLazやん")
+    val commentOfValorant = listOf("スパイクラッシュはクソ", "それはもうLazやん")
 
     val bfRegex = Regex("""(BF|bf|おばっち|オーバーウォッチ|overwatch|OW|ow)""")
     val subAccountRegex = Regex("""(サブ垢|サブアカ)""")
