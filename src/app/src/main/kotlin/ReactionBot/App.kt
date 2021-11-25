@@ -20,12 +20,13 @@ class BotClient : ListenerAdapter(){
     val commentOfYoutube = listOf("このクリップはすごい", "いやぁさすがだなあ", "えぇぇ", "これはmasan並み")
     val commentOfBF = listOf("BFやオーバーウォッチはゲームではないですよ", "valorantやりませんか？", "神ゲーｷﾀ━━━━(ﾟ∀ﾟ)━━━━!!")
     val commentOfUnrated = listOf("コンペから逃げるな")
-    val commentOfSubAccount = listOf("本アカから逃げるな", "スマーフは規約違反ですよ")
-    val commentOfValorant = listOf("スパイクラッシュはクソ", "rion", "それはもうLazやん")
+    val commentOfSubAccount = listOf("本アカから逃げるな")
+    val commentOfValorant = listOf("スパイクラッシュはクソ", "それはもうLazやん")
 
     val bfRegex = Regex("""(BF|bf|おばっち|オーバーウォッチ|overwatch|OW|ow)""")
     val subAccountRegex = Regex("""(サブ垢|サブアカ)""")
     val valorantRegex = Regex("""(Valorant|valorant|valo|ヴァロ|バロ)""")
+    val mentionRegex = Regex("""^@[^\s　]+$""")
 
     fun main(token: String) { //トークンを使ってBotを起動する部分
         jda = JDABuilder.createLight(token,
@@ -35,7 +36,7 @@ class BotClient : ListenerAdapter(){
     }
 
     override fun onReady(event: ReadyEvent) { //Botがログインしたときの処理
-        println("[ReactionDiscordBot] Logged in")
+        println("起動しました")
     }
 
     override fun onGuildMessageReceived(event : GuildMessageReceivedEvent) {
@@ -50,7 +51,7 @@ class BotClient : ListenerAdapter(){
         }
 
         // メンションのみのメッセージがあった時の処理
-        if(message.contentDisplay.startsWith("@") && !message.contentDisplay.contains(" ")){
+        if(mentionRegex.matches(message.contentDisplay)) {
             randomSendMessage(event, commentOfMention)
         }
 
