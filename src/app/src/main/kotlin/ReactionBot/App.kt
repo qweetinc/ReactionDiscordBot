@@ -28,6 +28,7 @@ class BotClient : ListenerAdapter(){
     val subAccountRegex = Regex("""(サブ垢|サブアカ)""")
     val valorantRegex = Regex("""(Valorant|valorant|valo|ヴァロ|バロ)""")
     val mentionRegex = Regex("""^@[^\s　]+$""")
+    val youtubeRegex = Regex("""(youtube.com|youtu.be)""")
 
     fun main(token: String) { //トークンを使ってBotを起動する部分
         jda = JDABuilder.createLight(token,
@@ -45,52 +46,71 @@ class BotClient : ListenerAdapter(){
 
         if(event.author.isBot) return //Bot自身のメッセージは無視する
 
-        // ダイス機能追加
+        // botに言わせたいメッセージを受け取ったときの処理
+        const command : String = "/reaction"
+        if(message.contentRaw.startsWith("!reaction")) {
+            val reaction = message.contentRaw.substring(command.length + 1)
+            val reactionMessage = message.channel.sendMessage("$reaction").complete()
+            reactionMessage.addReaction("\uD83D\uDC4D").complete()
+            reactionMessage.addReaction("\uD83D\uDC4E").complete()
+            message.delete().queueAfter(5, TimeUnit.SECONDS)
+            return
+        }
+
+        // ダイス機能
         if(message.contentDisplay.startsWith("/dice")) {
             val dice = Random.nextInt(1, 101)
             message.channel.sendMessage("${dice}").queue()
+            return
         }
 
         // メンションのみのメッセージがあった時の処理
         if(mentionRegex.matches(message.contentDisplay)) {
             randomSendMessage(event, commentOfMention)
+            return
         }
 
         // BFやオーバーウォッチを示唆するメッセージがあった時の処理
         if(bfRegex.containsMatchIn(message.contentDisplay)){
             randomSendMessage(event, commentOfBF)
+            return
         }
 
         // 女を含むテキストがあった時の処理
         if(message.contentDisplay.contains("女")){
             randomSendMessage(event, commentOfWoman)
+            return
         }
 
         // youtubeのリンクがあった時の処理
-        if(message.contentDisplay.contains("www.youtube.com")){
+        if(youtubeRegex.containsMatchIn(message.contentDisplay)){
             randomSendMessage(event, commentOfYoutube)
+            return
         }
 
         // アンレートを示唆するメッセージがあった時の処理
         if(message.contentDisplay.contains("アンレ") || message.contentDisplay.contains("あんれ")){
             randomSendMessage(event, commentOfUnrated)
+            return
         }
 
         // サブアカウントを示唆するメッセージがあった時の処理
         if(subAccountRegex.containsMatchIn(message.contentDisplay)){
             randomSendMessage(event, commentOfSubAccount)
+            return
         }
 
         // Valorantを示唆するメッセージがあった時の処理
         if(valorantRegex.containsMatchIn(message.contentDisplay)){
             randomSendMessage(event, commentOfValorant)
+            return
         }
 
         // 飯を示唆するメッセージがあったときの処理
         if(message.contentDisplay.contains("飯")){
             randomSendMessage(event, commentOfMeal)
+            return
         }
-        
     }
 
     private fun randomSendMessage(event: GuildMessageReceivedEvent, list: List<String>) {
