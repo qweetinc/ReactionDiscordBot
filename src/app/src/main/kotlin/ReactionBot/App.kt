@@ -49,48 +49,56 @@ class BotClient : ListenerAdapter(){
         if(message.contentDisplay.startsWith("/dice")) {
             val dice = Random.nextInt(1, 101)
             message.channel.sendMessage("${dice}").queue()
+            return
         }
 
         // メンションのみのメッセージがあった時の処理
         if(mentionRegex.matches(message.contentDisplay)) {
             randomSendMessage(event, commentOfMention)
+            return
         }
 
         // BFやオーバーウォッチを示唆するメッセージがあった時の処理
         if(bfRegex.containsMatchIn(message.contentDisplay)){
             randomSendMessage(event, commentOfBF)
+            return
         }
 
         // 女を含むテキストがあった時の処理
         if(message.contentDisplay.contains("女")){
             randomSendMessage(event, commentOfWoman)
+            return
         }
 
         // youtubeのリンクがあった時の処理
         if(message.contentDisplay.contains("www.youtube.com")){
             randomSendMessage(event, commentOfYoutube)
+            return
         }
 
         // アンレートを示唆するメッセージがあった時の処理
         if(message.contentDisplay.contains("アンレ") || message.contentDisplay.contains("あんれ")){
             randomSendMessage(event, commentOfUnrated)
+            return
         }
 
         // サブアカウントを示唆するメッセージがあった時の処理
         if(subAccountRegex.containsMatchIn(message.contentDisplay)){
             randomSendMessage(event, commentOfSubAccount)
+            return
         }
 
         // Valorantを示唆するメッセージがあった時の処理
         if(valorantRegex.containsMatchIn(message.contentDisplay)){
             randomSendMessage(event, commentOfValorant)
+            return
         }
 
         // 飯を示唆するメッセージがあったときの処理
         if(message.contentDisplay.contains("飯")){
             randomSendMessage(event, commentOfMeal)
+            return
         }
-        
     }
 
     private fun randomSendMessage(event: GuildMessageReceivedEvent, list: List<String>) {
