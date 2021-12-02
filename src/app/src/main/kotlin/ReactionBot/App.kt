@@ -47,13 +47,11 @@ class BotClient : ListenerAdapter(){
         if(event.author.isBot) return //Bot自身のメッセージは無視する
 
         // botに言わせたいメッセージを受け取ったときの処理
-        const command : String = "/reaction"
-        if(message.contentRaw.startsWith("!reaction")) {
+        val command = "/reaction"
+        if(message.contentRaw.startsWith(command)) {
             val reaction = message.contentRaw.substring(command.length + 1)
             val reactionMessage = message.channel.sendMessage("$reaction").complete()
-            reactionMessage.addReaction("\uD83D\uDC4D").complete()
-            reactionMessage.addReaction("\uD83D\uDC4E").complete()
-            message.delete().queueAfter(5, TimeUnit.SECONDS)
+            message.delete().complete()
             return
         }
 
