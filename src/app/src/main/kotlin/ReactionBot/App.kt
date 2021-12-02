@@ -28,6 +28,7 @@ class BotClient : ListenerAdapter(){
     val subAccountRegex = Regex("""(サブ垢|サブアカ)""")
     val valorantRegex = Regex("""(Valorant|valorant|valo|ヴァロ|バロ)""")
     val mentionRegex = Regex("""^@[^\s　]+$""")
+    val youtubeRegex = Regex("""(youtube.com|youtu.be)""")
 
     fun main(token: String) { //トークンを使ってBotを起動する部分
         jda = JDABuilder.createLight(token,
@@ -71,7 +72,7 @@ class BotClient : ListenerAdapter(){
         }
 
         // youtubeのリンクがあった時の処理
-        if(message.contentDisplay.contains("www.youtube.com")){
+        if(youtubeRegex.containsMatchIn(message.contentDisplay)){
             randomSendMessage(event, commentOfYoutube)
             return
         }
