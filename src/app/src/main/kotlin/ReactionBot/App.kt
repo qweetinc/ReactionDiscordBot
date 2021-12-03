@@ -49,6 +49,9 @@ class BotClient : ListenerAdapter(){
         // botに言わせたいメッセージを受け取ったときの処理
         val command = "/reaction"
         if(message.contentRaw.startsWith(command)) {
+            if (message.contentRaw.length < command.length + 1) {
+                return
+            }
             val reaction = message.contentRaw.substring(command.length + 1)
             val reactionMessage = message.channel.sendMessage("$reaction").complete()
             message.delete().complete()
@@ -63,7 +66,7 @@ class BotClient : ListenerAdapter(){
         }
 
         // メンションのみのメッセージがあった時の処理
-        if(mentionRegex.matches(message.contentDisplay)) {
+        if(message.mentions.length != 0 && mentionRegex.matches(message.contentDisplay)) {
             randomSendMessage(event, commentOfMention)
             return
         }
